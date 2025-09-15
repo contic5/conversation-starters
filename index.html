@@ -6,14 +6,24 @@
 <body>
 <main>
 <h1>Conversation Starters</h1>
+<h2>Settings</h2>
 <label for="target_category">Target Category</label>
 <select id="target_category">
 
 </select>
+<button id="new_conversation_starter">New Conversation Starter</button>
+
 <p class="display-1" id="starter">Display 1</p>
 <p class="display-1" id="category">Display 1</p>
+<h2>Works Cited</h2>
+<a href="https://parade.com/969981/parade/conversation-starters/">https://parade.com/969981/parade/conversation-starters/</a>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script async type="module" src="/src/main.js"></script>
+<script type="module">
+import {update_target_category,select_starter} from "/src/main.js";
+document.getElementById("target_category").onchange=update_target_category;
+document.getElementById("new_conversation_starter").onclick=select_starter;
+</script>
 </body>
 </html>

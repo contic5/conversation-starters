@@ -36,21 +36,55 @@ function sheet_to_dictionaries(data)
 
   return dictionaries;
 }
-function select_starter()
+export function select_starter()
 {
-  let roll=Math.floor(Math.random()*starters.length);
-  document.getElementById("starter").innerHTML=starters[roll]["Question"];
-  document.getElementById("category").innerHTML=starters[roll]["Category"];
+  for(let attempts=0;attempts<100;attempts++)
+  {
+    let roll=Math.floor(Math.random()*starters.length);
+    document.getElementById("starter").innerHTML=starters[roll]["Question"];
+    document.getElementById("category").innerHTML=starters[roll]["Category"];
+
+    if(starters[roll]["Category"]==target_category||target_category=="Any")
+    {
+      break;
+    }
+  }
+}
+function setup_categories(starters)
+{
+  let categories=["Any"];
+  for(let item of starters)
+  {
+    if(!categories.includes(item["Category"]))
+    {
+      categories.push(item["Category"]);
+    }
+  }
+
+  let target_category_select=document.getElementById("target_category");
+  for(let category of categories)
+  {
+    let option=document.createElement("option");
+    target_category_select.appendChild(option);
+    option.innerHTML=category;
+    option.value=category;
+  }
+}
+export function update_target_category()
+{
+  target_category=document.getElementById("target_category").value;
+  select_starter();
 }
 async function main()
 {
   const data=await fetchData();
   starters=sheet_to_dictionaries(data);
+  setup_categories(starters);
   console.log(starters);
 
   select_starter();
 }
 
-let target_category="";
+let target_category="Any";
 let starters=[];
 main();
