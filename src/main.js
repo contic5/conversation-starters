@@ -36,19 +36,39 @@ function sheet_to_dictionaries(data)
 
   return dictionaries;
 }
-export function select_starter()
+export function select_random_starter()
 {
+  let roll=0;
   for(let attempts=0;attempts<100;attempts++)
   {
-    let roll=Math.floor(Math.random()*starters.length);
-    document.getElementById("starter").innerHTML=starters[roll]["Question"];
-    document.getElementById("category").innerHTML=starters[roll]["Category"];
-
+    roll=Math.floor(Math.random()*starters.length);
     if(starters[roll]["Category"]==target_category||target_category=="Any")
     {
       break;
     }
   }
+
+  document.getElementById("starter").innerHTML=starters[roll]["Question"];
+  document.getElementById("category").innerHTML=starters[roll]["Category"];
+  document.getElementById("selected_conversation_starter").value=starters[roll]["Question"];
+}
+export function select_target_starter()
+{
+  let starter_question=document.getElementById("selected_conversation_starter").value;
+
+  for(let i=0;i<starters.length;i++)
+  {
+    if(starter_question==starters[i]["Question"])
+    {
+      document.getElementById("starter").innerHTML=starters[i]["Question"];
+      document.getElementById("category").innerHTML=starters[i]["Category"];
+    }
+  }
+}
+export function update_target_category()
+{
+  target_category=document.getElementById("target_category").value;
+  select_random_starter();
 }
 function setup_categories(starters)
 {
@@ -70,19 +90,27 @@ function setup_categories(starters)
     option.value=category;
   }
 }
-export function update_target_category()
+function setup_starters_datalist(starters)
 {
-  target_category=document.getElementById("target_category").value;
-  select_starter();
+  let starters_datalist=document.getElementById("conversation-starters");
+  for(let i=0;i<starters.length;i++)
+  {
+    const starter=starters[i];
+    let option=document.createElement("option");
+    starters_datalist.appendChild(option);
+    option.innerHTML=starter["Category"];
+    option.value=starter["Question"];
+  }
 }
 async function main()
 {
   const data=await fetchData();
   starters=sheet_to_dictionaries(data);
   setup_categories(starters);
+  setup_starters_datalist(starters);
   console.log(starters);
 
-  select_starter();
+  select_random_starter();
 }
 
 let target_category="Any";

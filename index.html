@@ -1,5 +1,6 @@
 <html>
 <head>
+<title>Conversation Starter</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 <link href="src/mystyle.css" type="text/css" rel="stylesheet">
 </head>
@@ -7,23 +8,34 @@
 <main>
 <h1>Conversation Starters</h1>
 <h2>Settings</h2>
+<div class="block">
 <label for="target_category">Target Category</label>
 <select id="target_category">
 
-</select>
-<button id="new_conversation_starter">New Conversation Starter</button>
+</select></div>
 
-<p class="display-1" id="starter">Display 1</p>
-<p class="display-1" id="category">Display 1</p>
+<div class="block">
+<label for="selected_conversation_starter">Selected Conversation Starter:</label>
+<input id="selected_conversation_starter" list="conversation-starters">
+<datalist id="conversation-starters"></datalist>
+</div>
+
+<div class="block">
+<button id="new_conversation_starter">New Conversation Starter</button>
+</div>
+
+<p class="display-2" id="starter">Loading Conversation Starters</p>
+<p class="display-3" id="category">Please Wait</p>
 <h2>Works Cited</h2>
 <a href="https://parade.com/969981/parade/conversation-starters/">https://parade.com/969981/parade/conversation-starters/</a>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script async type="module" src="/src/main.js"></script>
-<script type="module">
-import {update_target_category,select_starter} from "/src/main.js";
+<script type="module" async>
+import {update_target_category,select_random_starter,select_target_starter} from "/src/main.js";
 document.getElementById("target_category").onchange=update_target_category;
-document.getElementById("new_conversation_starter").onclick=select_starter;
+document.getElementById("new_conversation_starter").onclick=select_random_starter;
+document.getElementById("selected_conversation_starter").onchange=select_target_starter;
 </script>
 </body>
 </html>
