@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 google_sheet_link.txt
+build
+build/
